@@ -29,5 +29,9 @@ app.use(express.static(path.join(__dirname, "public")));
 // Rotas
 app.use("/users", userRoutes);
 
+app.get("/", (req, res) => {
+    res.render("home", { title: "Ingressos Disponíveis"});
+});
+
 // Iniciar o servidor
 app.listen(3000, () => console.log("Servidor rodando em http://localhost:3000"));
