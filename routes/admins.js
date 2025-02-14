@@ -22,4 +22,9 @@ router.get("/criar-admin", (req,res) => {
     })
 })
 
+// Rota para exibir a área de admin
+router.get("/admin", (req, res) => {
+    res.render("admin", { title: "Área Administrador" });
+});
+
 module.exports = router;

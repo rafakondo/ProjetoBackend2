@@ -39,7 +39,9 @@ router.post("/", authenticate.authAdmin, (req,res) => {
 
 router.get("/", (req,res) => {
     Ingresso.find().then((ingressos) => {
-        return res.status(200).json(ingressos);
+        return res.render("home", {
+            ingressos: ingressos
+        })
     }).catch((error) => {
         return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
     })
