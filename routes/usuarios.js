@@ -41,28 +41,35 @@ router.post("/login", (req,res) => {
     const { email, senha } = req.body;
 
     if(!email) {
-        return res.status(400).json({message: "Erro, o e-mail digitado é inválido"});
+        req.flash("error", "Erro, o e-mail digitado é inválido");
+        return res.redirect("/users/login");
     }
 
     if(!senha) {
-        return res.status(400).json({message: "Erro, a senha digitado é inválida"});
+        req.flash("error", "Erro, a senha digitada é inválida");
+        return res.redirect("/users/login");
     }
 
     Usuario.findOne({email: email}).then((usuario) => {
         if(!usuario) {
-            return res.status(404).json({message: "Usuario não encontrado"});
+            req.flash("error", "Usuário não encontrado");
+            return res.redirect("/users/login");
         }
 
         bcryptjs.compare(senha, usuario.senha, (err, senhaCorreta) => {
             if(err) {
-                return res.status(400).json({message: "Erro ao verificar senha"});
+                req.flash("error", "Erro ao verificar senha");
+                return res.redirect("/users/login");
             }
 
             if(senhaCorreta) {
                 const token = jsonwebtoken.sign({idUser: usuario._id}, SECRET, {expiresIn: "1h"});
-                return res.status(200).json({message: "Login feito", token: token});
+                res.cookie("token", token, { httpOnly: true, maxAge: 3600000 });
+                req.flash("success", "Login realizado com sucesso!");
+                return res.redirect("/");
             } else {
-                return res.status(400).json({message: "Senha incorreta"});
+                req.flash("error", "Senha incorreta");
+                return res.redirect("/users/login");
             }
         })
     }).catch((error) => {

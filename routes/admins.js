@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require("../models/Usuario");
 const Usuario = mongoose.model("usuarios");
 const bcryptjs = require("bcryptjs");
+const authenticate = require("../authenticate");
 
 router.get("/criar-admin", (req,res) => {
     const salt = bcryptjs.genSaltSync(10);
@@ -23,7 +24,7 @@ router.get("/criar-admin", (req,res) => {
 })
 
 // Rota para exibir a área de admin
-router.get("/admin", (req, res) => {
+router.get("/admin", authenticate.authAdmin, (req, res) => {
     res.render("admin", { title: "Área Administrador" });
 });
 

@@ -5,7 +5,7 @@ require("../models/Ingresso");
 const Ingresso = mongoose.model("ingressos");
 const authenticate = require("../authenticate");
 
-router.post("/", authenticate.authAdmin, (req,res) => {
+router.post("/adicionar", authenticate.authAdmin, (req,res) => {
     const { nome, preco, quantidadeDisponivel } = req.body;
 
     if(!nome) {
@@ -31,7 +31,7 @@ router.post("/", authenticate.authAdmin, (req,res) => {
     }
 
     new Ingresso(newIngresso).save().then((ingresso) => {
-        return res.status(201).json({message: "Ingresso adicionado", ingresso:ingresso});
+        return res.redirect("/admins/admin");
     }).catch((error) => {
         return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
     })

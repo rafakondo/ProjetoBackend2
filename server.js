@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/usuarios");
 const adminRoutes = require("./routes/admins");
 const ingressoRoutes = require("./routes/ingressos");
+const session = require("express-session");
+const flash = require("connect-flash");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -28,13 +31,35 @@ app.set("views", path.join(__dirname, "views"));
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(session({
+    secret: "segredorafaelasdsdasda",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}));
+
+app.use(cookieParser());
+
+// Configurar flash messages
+app.use(flash());
+
+// Middleware para tornar as mensagens acessíveis nas views
+app.use((req, res, next) => {
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
+});
+
 // Rotas
 app.use("/users", userRoutes);
 app.use("/admins", adminRoutes);
 app.use("/ingressos", ingressoRoutes);
 
 app.get("/", (req, res) => {
-    res.render("home", { title: "Ingressos Disponíveis"});
+    res.render("home", { title: "Ingressos Disponíveis", 
+        error: req.flash("error"),
+        success: req.flash("success")
+    });
 });
 
 // Iniciar o servidor

@@ -1,16 +1,28 @@
+{{#if error}}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+{{/if}}
+
+{{#if success}}
+    <div class="alert alert-success">
+        {{success}}
+    </div>
+{{/if}}
+
 <div class="admin-container">
     <h2 class="admin-title">Área do Administrador</h2>
 
     <h3 class="admin-subtitle">Adicionar Ingresso</h3>
-    <form action="/admin/adicionar" method="POST" class="admin-form">
+    <form action="/ingressos/adicionar" method="POST" class="admin-form">
         <label for="nome">Nome do Ingresso:</label>
         <input type="text" name="nome" class="admin-input" required>
 
         <label for="preco">Preço:</label>
-        <input type="number" name="preco" class="admin-input" required>
+        <input type="number" name="preco" step="0.01" class="admin-input" required>
 
         <label for="quantidade">Quantidade:</label>
-        <input type="number" name="quantidade" class="admin-input" required>
+        <input type="number" name="quantidadeDisponivel" class="admin-input" required>
 
         <button type="submit" class="admin-btn admin-btn-add">Adicionar</button>
     </form>

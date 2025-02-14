@@ -5,20 +5,24 @@ const Usuario = mongoose.model("usuarios");
 const SECRET = "rafakondosecret";
 
 function authUser(req,res,next) {
-    const token = req.headers.authentication;
+    const token = req.cookies.token;
 
     if(!token) {
-        return res.status(404).json({message: "token não encontrado"});
+        req.flash("erro", "Erro, faça login novamente")
+        return res.redirect("/");
+
     }
 
     jsonwebtoken.verify(token, SECRET, (err, decoded) => {
         if(err) {
-            return res.status(401).json({message: "Erro ao verificar token"});
+            req.flash("erro", "Erro ao verificar token")
+            return res.redirect("/");
         }
 
         Usuario.findOne({_id: decoded.idUser}).then((usuario) => {
             if(!usuario) {
-                return res.status(404).json({message: "Usuario nao encontrado"});
+                req.flash("erro", "Usuario nao encontrado")
+                return res.redirect("/");
             }
 
             req.user = usuario;
@@ -26,30 +30,32 @@ function authUser(req,res,next) {
         }).catch((error) => {
             return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
         })
-    }).catch((error) => {
-        return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
     })
 }
 
 function authAdmin(req,res,next) {
-    const token = req.headers.authentication;
+    const token = req.cookies.token;
 
     if(!token) {
-        return res.status(404).json({message: "token não encontrado"});
+        req.flash("erro", "Erro, faça login novamente")
+        return res.redirect("/");
     }
 
     jsonwebtoken.verify(token, SECRET, (err, decoded) => {
         if(err) {
-            return res.status(401).json({message: "Erro ao verificar token"});
+            req.flash("erro", "Erro ao verificar token")
+            return res.redirect("/");
         }
 
         Usuario.findOne({_id: decoded.idUser}).then((usuario) => {
             if(!usuario) {
-                return res.status(404).json({message: "Usuario nao encontrado"});
+                req.flash("erro", "Usuario nao encontrado")
+                return res.redirect("/");
             }
 
             if(usuario.eAdmin === false) {
-                return res.status(401).json({message: "Apenas admins podem realizar esta acao"});
+                req.flash("erro", "Apenas admins podem realizar esta acao")
+                return res.redirect("/");
             }
 
             req.user = usuario;
@@ -57,8 +63,6 @@ function authAdmin(req,res,next) {
         }).catch((error) => {
             return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
         })
-    }).catch((error) => {
-        return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
     })
 }
 
