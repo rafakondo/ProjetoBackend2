@@ -3,6 +3,7 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/usuarios");
 
 const app = express();
 
@@ -26,10 +27,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Rotas
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
+app.use("/users", userRoutes);
 
 // Iniciar o servidor
 app.listen(3000, () => console.log("Servidor rodando em http://localhost:3000"));

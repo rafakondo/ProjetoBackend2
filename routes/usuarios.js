@@ -65,3 +65,5 @@ router.post("/login", (req,res) => {
         return res.status(500).json({message: "Houve um erro no servidor, erro: "+error});
     })
 });
+
+module.exports = router
