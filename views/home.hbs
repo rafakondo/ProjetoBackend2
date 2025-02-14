@@ -1,0 +1,12 @@
+<h2>Ingressos Disponíveis</h2>
+
+<div class="ingressos">
+    {{#each ingressos}}
+        <div class="ingresso">
+            <h3>{{nome}}</h3>
+            <p>Preço: R$ {{preco}},00</p>
+            <p>Disponíveis: {{quantidade}}</p>
+            <a href="/compra/{{id}}" class="botao">Comprar</a>
+        </div>
+    {{/each}}
+</div>
