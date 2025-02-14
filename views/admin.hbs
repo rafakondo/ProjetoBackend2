@@ -1,0 +1,44 @@
+<div class="admin-container">
+    <h2 class="admin-title">Área do Administrador</h2>
+
+    <h3 class="admin-subtitle">Adicionar Ingresso</h3>
+    <form action="/admin/adicionar" method="POST" class="admin-form">
+        <label for="nome">Nome do Ingresso:</label>
+        <input type="text" name="nome" class="admin-input" required>
+
+        <label for="preco">Preço:</label>
+        <input type="number" name="preco" class="admin-input" required>
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" name="quantidade" class="admin-input" required>
+
+        <button type="submit" class="admin-btn admin-btn-add">Adicionar</button>
+    </form>
+
+    <h3 class="admin-subtitle">Ingressos Criados</h3>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each ingressos}}
+            <tr>
+                <td>{{nome}}</td>
+                <td>R$ {{preco}},00</td>
+                <td>{{quantidade}}</td>
+                <td>
+                    <div class="admin-actions">
+                        <a href="/admin/editar/{{id}}" class="admin-btn admin-btn-edit">Editar</a>
+                        <a href="/admin/excluir/{{id}}" class="admin-btn admin-btn-delete">Excluir</a>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
