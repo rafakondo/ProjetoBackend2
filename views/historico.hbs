@@ -1,0 +1,8 @@
+<h2>Histórico de Compras</h2>
+<ul>
+    {{#each compras}}
+        <li>
+            <a href="/ingresso/{{this.id}}">{{this.nome}} - {{this.preco}} - {{this.quantidade}} ingresso(s)</a>
+        </li>
+    {{/each}}
+</ul>
