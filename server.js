@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 //mongoose
-mongoose.connect("mongodb+srv://rafaelkondobueno:<db_password>@cluster0.s8qoo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect("mongodb+srv://rafaelkondobueno:OtlevAk6jTC0ZNzW@cluster0.s8qoo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
     console.log("Conectado ao banco de dados com sucesso!!!");
 }).catch((erro) => {
     console.log("Erro ao se conectar ao banco de dados, erro: "+ erro);
