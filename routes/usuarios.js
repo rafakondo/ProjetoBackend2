@@ -33,6 +33,10 @@ router.post("/", (req,res) => {
     })
 });
 
+router.get("/login", (req, res) => {
+    res.render("login", { title: "Login" });
+});
+
 router.post("/login", (req,res) => {
     const { email, senha } = req.body;
 
