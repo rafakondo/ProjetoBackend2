@@ -4,6 +4,8 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/usuarios");
+const adminRoutes = require("./routes/admins");
+const ingressoRoutes = require("./routes/ingressos");
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Rotas
 app.use("/users", userRoutes);
+app.use("/admins", adminRoutes);
+app.use("/ingressos", ingressoRoutes);
 
 app.get("/", (req, res) => {
     res.render("home", { title: "Ingressos Disponíveis"});
